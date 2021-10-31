@@ -13,13 +13,14 @@ function PopupWithForm(props) {
           aria-label="Close"
           onClick={props.onClose}
         ></button>
-        <form
-          className={`form form_type_${props.name}`}
-          name={`${props.name}`} /* in the original code the form name is different */
-          noValidate
-        >
+        <form className={`form form_type_${props.name}`} name={`${props.name}`}>
           <h2 className="form__heading">{props.title}</h2>
-          <fieldset className="form__fieldset">{props.children}</fieldset>
+          <fieldset className="form__fieldset">
+            {props.children}{" "}
+            <button type="submit" className="form__submit" disabled>
+              {props.buttonText}
+            </button>
+          </fieldset>
         </form>
       </div>
     </div>

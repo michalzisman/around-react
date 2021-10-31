@@ -24,7 +24,7 @@ function Card(props) {
             className="card__like"
             aria-label="Like"
           ></button>
-          <p className="card__likesNumber"></p>
+          <p className="card__likesNumber">{props.likes}</p>
         </div>
       </div>
     </div>
