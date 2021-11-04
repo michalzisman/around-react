@@ -1,6 +1,6 @@
 **Link to GitHub Pages**
 
-https://michalzisman.github.io/around-react/index.html
+https://michalzisman.github.io/around-react/
 
 # Getting Started with Create React App
 
