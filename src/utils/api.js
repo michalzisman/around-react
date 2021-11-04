@@ -2,9 +2,6 @@ const customFetch = (url, headers, body) =>
   fetch(url, headers, body).then((res) =>
     res.ok ? res.json() : Promise.reject(`Error: ${res.statusText}`)
   );
-// .catch((err) => {
-//   return err;
-// });
 
 class Api {
   constructor({ baseUrl, headers }) {
@@ -59,8 +56,8 @@ class Api {
     return customFetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       headers: this._headers,
       method: event.target.classList.contains("card__like_active")
-        ? "PUT"
-        : "DELETE",
+        ? "DELETE"
+        : "PUT",
     });
   }
 }
@@ -68,7 +65,7 @@ class Api {
 export const api = new Api({
   baseUrl: "https://around.nomoreparties.co/v1/group-12",
   headers: {
-    authorization: " 978f0b2f-5c84-4cbe-bdf4-1813c3f57b95",
+    authorization: "978f0b2f-5c84-4cbe-bdf4-1813c3f57b95",
     "Content-Type": "application/json",
   },
 });

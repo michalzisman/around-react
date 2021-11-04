@@ -1,27 +1,13 @@
-import React, { useState, useEffect } from "react";
-// import PopupWithForm from "./PopupWithForm";
+import React from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
-// import ImagePopup from "./ImagePopup";
-import { api } from "../utils/api";
 
 function Main(props) {
-  const [userName, setUserName] = useState("User Name");
-  const [userDescription, setUserDescription] = useState("Description");
-  const [userAvatar, setUserAvatar] = useState();
-  const [cards, setCard] = useState([]);
+  const { name, about, avatar } = React.useContext(CurrentUserContext);
 
-  useEffect(() => {
-    Promise.all([api.getInitialCards(), api.getUserInfo()])
-      .then(([cardData, userData]) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-        setCard(cardData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  function handleCardLike(event, cardId) {
+    props.onCardLike(event, cardId);
+  }
 
   return (
     <>
@@ -31,7 +17,7 @@ function Main(props) {
             <div
               className="profile__avatar"
               onClick={props.onEditAvatarClick}
-              style={{ backgroundImage: `url(${userAvatar})` }}
+              style={{ backgroundImage: `url(${avatar})` }}
             >
               <div className="profile__avatar-overlay">
                 <div className="profile__avatar-edit"></div>
@@ -39,7 +25,7 @@ function Main(props) {
             </div>
             <div className="profile__info">
               <div className="profile__info-top">
-                <h1 className="profile__name">{userName}</h1>
+                <h1 className="profile__name">{name}</h1>
                 <button
                   type="button"
                   className="profile__edit"
@@ -47,7 +33,7 @@ function Main(props) {
                   onClick={props.onEditProfileClick}
                 ></button>
               </div>
-              <p className="profile__description">{userDescription}</p>
+              <p className="profile__description">{about}</p>
             </div>
           </div>
           <button
@@ -59,14 +45,18 @@ function Main(props) {
         </section>
 
         <section className="cards">
-          {cards.map((card) => {
+          {props.cards.map((card) => {
             return (
               <Card
+                onCardLike={handleCardLike}
+                onCardDelete={props.onCardDelete}
+                onCardClick={props.onCardClick}
                 key={card._id}
                 link={card.link}
                 name={card.name}
-                likes={card.likes.length}
-                onCardClick={props.onCardClick}
+                likes={card.likes}
+                ownerId={card.owner._id}
+                cardId={card._id}
               />
             );
           })}
