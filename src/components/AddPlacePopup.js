@@ -5,15 +5,6 @@ function AddPlacePopup(props) {
   const name = useRef();
   const link = useRef();
 
-  function handleNameChange(e) {
-    name.current.value = e.target.value;
-    // setName(e.target.value);
-  }
-
-  function handleLinkChange(e) {
-    link.current.value = e.target.value;
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
     props.onAddNewPlace({
@@ -32,7 +23,6 @@ function AddPlacePopup(props) {
       onSubmit={handleSubmit}
     >
       <input
-        onChange={handleNameChange}
         type="text"
         className="form__input form__input_field_title"
         id="title-input"
@@ -45,7 +35,6 @@ function AddPlacePopup(props) {
       />
       <span className="form__input-error title-input-error"></span>
       <input
-        onChange={handleLinkChange}
         type="url"
         className="form__input form__input_field_link"
         id="link-input"

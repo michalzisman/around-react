@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { api } from "../utils/api";
+import Api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Header from "./Header";
 import Main from "./Main";
@@ -12,8 +12,7 @@ import ImagePopup from "./ImagePopup";
 function App() {
   const [currentUser, setCurrentUser] = useState(
     useEffect(() => {
-      api
-        .getUserInfo()
+      Api.getUserInfo()
         .then((res) => {
           setCurrentUser(res);
         })
@@ -25,8 +24,7 @@ function App() {
 
   const [cards, setCards] = useState(
     useEffect(() => {
-      api
-        .getInitialCards()
+      Api.getInitialCards()
         .then((cardData) => {
           setCards(cardData);
         })
@@ -58,8 +56,7 @@ function App() {
   }
 
   function handleCardLike(event, cardId) {
-    api
-      .toggleLike(event, cardId)
+    Api.toggleLike(event, cardId)
       .then((newCard) => {
         setCards((state) => state.map((c) => (c._id === cardId ? newCard : c)));
       })
@@ -69,8 +66,7 @@ function App() {
   }
 
   function handleCardDelete(cardId) {
-    api
-      .deleteCard(cardId)
+    Api.deleteCard(cardId)
       .then((res) => {
         setCards(cards.filter((card) => card._id !== cardId));
       })
@@ -87,8 +83,7 @@ function App() {
   }
 
   function handleUpdateUser(data) {
-    api
-      .setUserInfo(data)
+    Api.setUserInfo(data)
       .then((res) => {
         closeAllPopups();
         setCurrentUser(res);
@@ -99,8 +94,7 @@ function App() {
   }
 
   function handleUpdateAvatar(avatar) {
-    api
-      .setProfilePic(avatar)
+    Api.setProfilePic(avatar)
       .then((res) => {
         closeAllPopups();
         setCurrentUser(res);
@@ -111,8 +105,7 @@ function App() {
   }
 
   function handleAddPlaceSubmit(data) {
-    api
-      .createCard(data)
+    Api.createCard(data)
       .then((res) => {
         closeAllPopups();
         setCards([res, ...cards]);
