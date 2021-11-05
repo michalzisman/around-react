@@ -1,15 +1,28 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup(props) {
-  const name = useRef();
-  const link = useRef();
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
+
+  useEffect(() => {
+    setName("");
+    setLink("");
+  }, [props.isOpen]);
+
+  function handleChangeName(e) {
+    setName(e.target.value);
+  }
+
+  function handleChangeLink(e) {
+    setLink(e.target.value);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
     props.onAddNewPlace({
-      name: name.current.value,
-      link: link.current.value,
+      name,
+      link,
     });
   }
 
@@ -27,7 +40,8 @@ function AddPlacePopup(props) {
         className="form__input form__input_field_title"
         id="title-input"
         name="name"
-        ref={name}
+        value={name}
+        onChange={handleChangeName}
         placeholder="Place name"
         minLength="1"
         maxLength="30"
@@ -39,7 +53,8 @@ function AddPlacePopup(props) {
         className="form__input form__input_field_link"
         id="link-input"
         name="link"
-        ref={link}
+        value={link}
+        onChange={handleChangeLink}
         placeholder="Image link"
         required
       />

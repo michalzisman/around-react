@@ -10,31 +10,31 @@ import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(
-    useEffect(() => {
-      api
-        .getUserInfo()
-        .then((res) => {
-          setCurrentUser(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, [])
-  );
+  const [currentUser, setCurrentUser] = useState();
 
-  const [cards, setCards] = useState(
-    useEffect(() => {
-      api
-        .getInitialCards()
-        .then((cardData) => {
-          setCards(cardData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, [])
-  );
+  useEffect(() => {
+    api
+      .getUserInfo()
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const [cards, setCards] = useState();
+
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((cardData) => {
+        setCards(cardData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
